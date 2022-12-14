@@ -1,0 +1,31 @@
+.example-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .example-radio-group {
+    display: block;
+    border: 1px solid #555;
+    margin: 20px;
+    padding: 10px;
+  }
+
+  .optionActive{
+    --tw-bg-opacity: 1;
+    background-color: rgb(127 29 29 / var(--tw-bg-opacity))
+  }
+
+ input{
+    border:1px solid rgb(173, 171, 171);
+    border-radius: 5px;
+    padding: 7px;
+  }
+  
+  textarea:focus, input:focus, input[type]:focus {
+    border-color: rgb(208, 31, 0);
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px rgba(255, 105, 105, 0.915);
+    outline: 0 none;
+}
