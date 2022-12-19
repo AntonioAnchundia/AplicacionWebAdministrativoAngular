@@ -1,12 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private auth: Auth) { }
+  constructor(private auth: Auth, private afAuth: AngularFireAuth) { }
+
+  async resetPassword(email: string): Promise<void>{
+    
+    try{
+      return this.afAuth.sendPasswordResetEmail(email);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+
 
   cargar( archivos: string[]){
     for(let archivo of archivos){

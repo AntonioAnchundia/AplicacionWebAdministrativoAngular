@@ -3,7 +3,7 @@
         <div class="contenedor__todo">
             <div class="caja__trasera">
                 <div class="caja__trasera-login">
-                    <h3>¿Ya haasss sido registrado?</h3>
+                    <h3>¿Ya has sido registrado?</h3>
                     <p>Inicia sesión para entrar en la página</p>
                     <button id="btn__iniciar-sesion">Iniciar Sesión</button>
                 </div>
@@ -16,9 +16,6 @@
 
             <!--Formulario de Login y registro-->
             <div class="contenedor__login-recuperar">
-                <!--Login-->
-                <!-- <form method="POST" class="formulario__login" id="formulario__login" onsubmit="return false"> -->
-
                 <form class="formulario__login" id="formulario__login" [formGroup]="formLogin">
                     <img src="assets/images/logo-empresa.png" alt="logo-empresa" class="logo-empresa">
                     <h2>Iniciar Sesión</h2>
@@ -26,9 +23,6 @@
                         <input type="email" formControlName="email" class="form-control mb-4" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput" style="font-size: 14px;" class="mb-3"> <i class="bi bi-envelope-fill"></i>
                             &nbsp;Ingrese su correo</label>
-                        <!-- <p class="mt-2 d-none" id="pOcultoValidacion"
-                            style="color: rgb(236, 35, 35); font-size: 14.5px;">Tu
-                            correo electrónico debe ser: name@example.com</p> -->
                     </div>
                     
                     <div class="form-floating position-relative">
@@ -58,8 +52,6 @@
                     </div>
 
                     <button (click)="onClickLogin()">Entrar</button>
-                    <!-- <div class="error"></div> -->
-
                     
                 </form>
 
@@ -68,7 +60,7 @@
                     <img src="assets/images/logo-empresa.png" alt="logo-empresa" class="logo-empresa">
                     <h2>Recuperar contraseña</h2>
                     <div class="form-floating mb-1">
-                        <input type="email" class="form-control inputRecuperar" id="floatingInput"
+                        <input type="email"  [formControl]="userEmail" class="form-control inputRecuperar" id="floatingInput"
                             placeholder="name@example.com">
                         <label for="floatingInput" style="font-size: 14px;"> <i class="bi bi-envelope-fill"></i>
                             &nbsp;Ingrese su correo</label>
@@ -76,7 +68,7 @@
                             style="color: rgb(236, 35, 35); font-size: 14.5px;">Tu
                             correo electrónico debe ser: name@example.com</p>
                     </div>
-                    <button onclick="Reset();">Enviar Email</button>
+                    <button (click)="onReset()">Enviar Email</button>
                     <div class="errorRecuperar"></div>
                 </form>
             </div>

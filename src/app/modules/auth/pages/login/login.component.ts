@@ -6,9 +6,12 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [AuthService],
 })
 export class LoginComponent implements OnInit {
+
+  userEmail = new FormControl('');
 
   formLogin : FormGroup;
   // error : string="CORREO O CONTRASEÑA NO VALIDAS";
@@ -25,6 +28,19 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.cargar(['animacionLogin']);
+  }
+
+  onReset(){
+    try{
+      const email :any = this.userEmail.value;
+      this.authService.resetPassword(email);
+      window.alert('Email sent, check your inbox')
+      //redirect to login
+      this._router.navigateByUrl("auth/login");
+    }
+    catch(error){
+      console.log(error)
+    }
   }
 
   onClickLogin(){

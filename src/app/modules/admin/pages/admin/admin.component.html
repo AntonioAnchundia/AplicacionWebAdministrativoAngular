@@ -1,5 +1,5 @@
 <div class="flex">
-    <!-- MMENU LATERAL -->
+        <!-- MENU LATERAL -->
     <div class="w-2/12 bg-red-700 h-screen hidden md:block">
         <div>
             <a [routerLink]="['/admin/home']"><img src="assets/images/logo-empresa.png" alt="logo"
@@ -82,16 +82,15 @@
             <div class="link flex">R. RHumano</div>
         </div>
     </div>
-    <!-- CONTENIDO -->
+        <!-- CONTENIDO -->
     <div class="w-full sm:w-5/6 px-4 pt-4">
+            <!-- TITULO -->
         <div>
             <span class="uppercase font-bold"> | Registrar Administrador</span>
         </div>
-
-
-        <!-- registro -->
-
+            <!-- REGISTRO -->
         <div class="w-full flex flex-col md:flex-row">
+                <!-- CONTENEDOR DE AGREGAR FOTO -->
             <div class="w-full mt-3 md:w-1/5 md:h-auto flex items-center justify-center">
                 <input type="file" name="" id="" class="hidden" />
                 <div
@@ -101,6 +100,7 @@
                     </p>
                 </div>
             </div>
+                <!-- FORMULARIO DEL REGISTRO -->
             <form class="example-form" [formGroup]="adminForm">
                 <div class="flex flex-col md:flex-row">
                     <input placeholder="Nombre" formControlName="nombre" class="mb-2 md:m-2 w-full md:w-1/4" />
@@ -116,72 +116,76 @@
                     <input placeholder="Confirmacion" formControlName="repetirContraseña"
                         class="mb-2 md:m-2 w-full md:w-1/4" />
                 </div>
+
+
+
+
+
+                <div class="flex items-center justify-end">   
+                    <!-- BOTON DE AGREGAR -->
+                    <input *ngIf="!botones" type="submit" value="Guardar" class="px-3 py-1 m-2 bg-red-500 rounded-xl text-white"
+                    (click)="submitAdmin()" />
+        
+                    <!-- BOTON DE ACTUALIZAR -->
+                    <input *ngIf="botones;"   type="submit" value="Actualizar" class="px-3 py-1 m-2 bg-red-500 rounded-xl text-white"
+                    (click)="updateAdmin()"/>    
+                
+                    <!-- BOTON DE CANCELAR -->
+                    <input *ngIf="botones; " type="submit" value="Cancelar" class="px-3 py-1 m-2 bg-red-500 rounded-xl text-white"
+                    (click)="resetForm()" />              
+                </div>
+
+
+
+
+
+
             </form>
         </div>
-        <div class="flex items-center justify-end">
-            <input type="submit" value="Guardar" class="px-3 py-1 m-2 bg-red-500 rounded-xl text-white"
-                (click)="submitAdmin()" />
-        </div>
+        
+            <!-- CONTENEDOR DE BOTONES -->
+                <!-- AQUI VA EL APARTADO DE LOS BOTONES QUE ESTA EN EL TABLE -->
+                
+            
+                
+       
 
-        <!-- LISTADO -->
+            <!-- LISTADO -->
         <mat-card class="rounded-lg sm:w-full mx-auto mt-2 sm:mt-0">
             <section class="" tabindex="0">
-                <!-- <div class="w-full  overflow-x-scroll lg:overflow-hidden">
-                    <table class="w-full" 
-                        *ngFor="let admin of admins; let i = index"
-                        [class.active]="i == currentIndex"
-                        (click)="sectActiveAdmin(admin, i)"
-                    >
-                        
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef class="min-w-60 text-center px-2 font-semibold">Nombre</th>
-                        <td mat-cell class="min-w-fit text-center px-2 ">{{admin.nombre }} {{admin.apellido}}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="correo">
-                        <th mat-header-cell *matHeaderCellDef>Admin ID</th>
-                        <td mat-cell >{{admin.correo }}</td>
-                    </ng-container>
-                
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-                </div> -->
-
-                <div class="w-full  overflow-y-scroll lg:overflow-hidden">
-                    <table mat-table [dataSource]="dataSource" class="w-full"
-                        *ngFor="let admin of admins; let i = index"
-                        [class.active]="i == currentIndex"
-                        
-                    >
-
+                <div class="cont-tabla  w-full  overflow-y-scroll h-30 border-cyan-800">
+                        <!-- TABLA -->
+                    <table mat-table  [dataSource]="admins" class="w-full h-auto">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef class="min-w-60 text-center px-2 font-semibold"> NOMBRE </th>
                             <td mat-cell *matCellDef="let element" class="min-w-fit text-center px-2 ">
-                                {{admin.nombre}} {{admin.apellido}}</td>
+                                {{element.nombre}} {{element.apellido}}</td>
                         </ng-container>
 
                         <ng-container matColumnDef="correo">
                             <th mat-header-cell *matHeaderCellDef class="min-w-30 text-center px-2 font-semibold"> CORREO </th>
                             <td mat-cell *matCellDef="let element" class="min-w-30 text-center px-2 ">
-                                {{admin.correo}}
+                                {{element.correo}}
                             </td>
                         </ng-container>
-
+                            <!-- CONTENEDOR DE BOTON ACTUALIZAR Y ELIMINAR -->
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef class="min-w-30 text-center px-2 font-semibold">ACCIONES </th>
                             <td mat-cell *matCellDef="let element" class="min-w-50 text-center px-2 ">
-                                <button matTooltip="Editar" matTooltipPosition="above" (click)="sectActiveAdmin(admin, i)">
+                                    <!-- BOTON EDITAR -->
+                                <button matTooltip="Editar" matTooltipPosition="above" (click)="sectActiveAdmin(element)">
                                     <i class="bi bi-pencil-square text-blue-900"></i>
                                 </button>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button matTooltip="Eliminar" matTooltipPosition="above" (click)="deleteAdmin();">
-                                    <i class="bi bi-trash3 text-blue-900" (click)="deleteAdmin();"></i>
+                                    <!-- BOTON DE ELIMINAR -->
+                                <button matTooltip="Eliminar" matTooltipPosition="above"(click)="deleteAdmin('900ms','900ms');">
+                                    <i class="bi bi-trash3 text-blue-900" ></i>
                                 </button>
                                 
                             </td>
                         </ng-container>
 
+                            <!-- DECLARACION DE LAS COLUMNAS -->
                         <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
@@ -192,162 +196,3 @@
         </mat-paginator>
     </div>
 </div>
-
-<!-- sidenav RESPONSIVE -->
-<!-- <mat-sidenav-container class="example-container" *ngIf="mostarSideNav">
-    <mat-sidenav #sidenav [mode]="'over'">
-        <div class="w-60 bg-red-700 h-screen ">
-
-            <div class="w-full bg-red-700 h-screen">
-                <div>
-                    <a [routerLink]="['/admin/home']"><img src="assets/images/logo-empresa.png" alt="logo"
-                            class="w-4/5  m-auto pt-4 "></a>
-                </div>
-
-                <div class="dropdown  flex justify-center mt-4 mb-9">
-                    <a href="#" class="d-block link-dark text-decoration-none  animate__animated animate__backInRight"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="mdo" width="120" height="120" class="rounded-circle">
-                    </a>
-                    <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" href="#">Perfil</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item">Cerrar Sesión</a></li>
-                    </ul>
-                </div>
-
-                <div class="text-white  text-center flex cursor-pointer p-2 m-3 rounded hover:bg-red-900"
-                    [routerLink]="['/admin/admin']" [routerLinkActive]="'optionActive'">
-                    <div class="logo mr-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-gear w-5"
-                            viewBox="0 0 16 16">
-                            <path
-                                d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm.256 7a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
-                        </svg>
-                    </div>
-                    <div class="link flex">
-                        R. Admin
-                    </div>
-                </div>
-
-                <div class="text-white  text-center flex cursor-pointer p-2 m-3 rounded hover:bg-red-900"
-                    [routerLink]="['/admin/department']" [routerLinkActive]="'optionActive'">
-                    <div class="logo mr-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-buildings" viewBox="0 0 16 16">
-                            <path
-                                d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022ZM6 8.694 1 10.36V15h5V8.694ZM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15Z" />
-                            <path
-                                d="M2 11h1v1H2v-1Zm2 0h1v1H4v-1Zm-2 2h1v1H2v-1Zm2 0h1v1H4v-1Zm4-4h1v1H8V9Zm2 0h1v1h-1V9Zm-2 2h1v1H8v-1Zm2 0h1v1h-1v-1Zm2-2h1v1h-1V9Zm0 2h1v1h-1v-1ZM8 7h1v1H8V7Zm2 0h1v1h-1V7Zm2 0h1v1h-1V7ZM8 5h1v1H8V5Zm2 0h1v1h-1V5Zm2 0h1v1h-1V5Zm0-2h1v1h-1V3Z" />
-                        </svg>
-                    </div>
-                    <div class="link flex">
-                        R. Departamento
-                    </div>
-                </div>
-
-                <div class="text-white  text-center flex cursor-pointer p-2 m-3 rounded hover:bg-red-900"
-                    [routerLink]="['/admin/university']" [routerLinkActive]="'optionActive'">
-                    <div class="logo mr-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-mortarboard-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z" />
-                            <path
-                                d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Z" />
-                        </svg>
-                    </div>
-                    <div class="link flex">
-                        R. Universidad
-                    </div>
-                </div>
-                <div class="text-white  text-center flex cursor-pointer p-2 m-3 rounded hover:bg-red-900"
-                    [routerLink]="['/admin/technological']" [routerLinkActive]="'optionActive'">
-                    <div class="logo mr-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-building-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M3 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h3v-3.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V16h3a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H3Zm1 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Z" />
-                        </svg>
-                    </div>
-                    <div class="link flex">
-                        R. Tecnológico
-                    </div>
-                </div>
-                <div class="text-white  text-center flex cursor-pointer p-2 m-3 rounded hover:bg-red-900"
-                    [routerLink]="['/admin/human-resources']" [routerLinkActive]="'optionActive'">
-                    <div class="logo mr-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-person-lines-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
-                        </svg>
-                    </div>
-                    <div class="link flex">
-                        R. RHumano
-                    </div>
-                </div>
-            </div>
-        </div>
-    </mat-sidenav>
-
-    <mat-sidenav-content class="h-screen">
-        <p><button mat-button (click)="sidenav.toggle()"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                    fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                </svg></button></p>
-        <div class=" w-full sm:w-5/6 p-3 sm:p-5">
-            <div>
-                <span class="uppercase font-bold"> | Registrar Administrador</span>
-            </div>
-            <div class="mt-3">
-                <form [formGroup]="" class="flex  flex-wrap mx-16">
-                    <div class="text-center mt-0 position-relative flex items-center mr-3 w-full sm:w-auto">
-                        <div class="image-preview" id="imagePreview">
-                            <img src="" alt="Image-Preview" id='imagen' class="image-preview__image d-none w-25 p-1">
-                        </div>
-                        <input type="file" id="inputFile" class="d-none" accept="image/*">
-                        <div class="text-center flex justify-center w-full sm:w-auto">
-                            <button class="btn bg-gray-600 text-white hover:bg-gray-700 " id="attachment"><i
-                                    class="bi bi-image"></i>&nbsp; Cargar foto</button>
-                        </div>
-                    </div>
-                    <mat-form-field appearance="fill" class="mr-3 w-full sm:w-auto">
-                        <mat-label>Nombres</mat-label>
-                        <input matInput formControlName="nombreAdmin" required>
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" class="mr-3 w-full sm:w-auto">
-                        <mat-label>Cédula</mat-label>
-                        <input matInput formControlName="cedulaAdmin" required>
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" class="mr-3 w-full sm:w-auto">
-                        <mat-label>Dirección</mat-label>
-                        <input matInput formControlName="direccionAdmin" required>
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" class="mr-3 w-full sm:w-auto">
-                        <mat-label>Celular</mat-label>
-                        <input matInput formControlName="CelularAdmin" required>
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" class="mr-3 w-full sm:w-auto">
-                        <mat-label>Correo</mat-label>
-                        <input matInput formControlName="CorreoAdmin" required>
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" class="mr-3 w-full sm:w-auto">
-                        <mat-label>Contraseña</mat-label>
-                        <input matInput formControlName="ContrasenaAdmin" required>
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" class="mr-3 w-full sm:w-auto">
-                        <mat-label>Confirmación de contraseña</mat-label>
-                        <input matInput formControlName="ConfirmacionAdmin" required>
-                    </mat-form-field>
-                    <div class="flex items-center">
-                        <input type="submit" value="Guardar" class="px-3 py-2 bg-green-700 rounded-xl text-white">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </mat-sidenav-content>
-</mat-sidenav-container> -->

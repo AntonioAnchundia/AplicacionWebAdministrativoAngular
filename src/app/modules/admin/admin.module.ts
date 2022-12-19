@@ -19,7 +19,7 @@ import {MatCardModule} from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table'  
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatPaginatorModule} from '@angular/material/paginator';
-
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -33,20 +33,16 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatFormFieldModule,
     MatInputModule,
     HttpClientModule,
-
-    
     FormsModule,
     ReactiveFormsModule,
-
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-
     MatCardModule,
     MatTableModule,
     MatTooltipModule,
     MatPaginatorModule,
 
-
+    MatDialogModule,
   ],
   providers:[AdministradorService],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
