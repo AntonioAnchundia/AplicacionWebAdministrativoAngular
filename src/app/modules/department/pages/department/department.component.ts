@@ -29,6 +29,7 @@ export class DepartmentComponent implements OnInit {
 
   constructor(private departmentoAPI: DepartmentService, private dialog: MatDialog) { 
     this.departamentoForm = new FormGroup({
+      photo: new FormControl('',Validators.required),
       nombre: new FormControl('', Validators.required),
       codigoDepa: new FormControl('', Validators.required),
       numeroPersonal: new FormControl('', Validators.required),
@@ -107,4 +108,13 @@ export class DepartmentComponent implements OnInit {
     this.getScreenWidth <= 1169 ? this.mostarSideNav=true : this.mostarSideNav=false;
   }
   
+
+private image: any;
+  handleImage(event: any): void{
+    //Extraigo la informacion de la img
+    this.image = event.target.files[0];
+    // console.log('IMAGE', this.image);
+}
+
+
 }

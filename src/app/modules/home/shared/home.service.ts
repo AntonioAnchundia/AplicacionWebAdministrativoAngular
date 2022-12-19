@@ -10,14 +10,10 @@ export class HomeService {
 
 constructor(private auth: Auth, private afAuth: AngularFireAuth,private router: Router) { }
 
-  logout(){
-    this.auth.signOut();
-  }
-
   logOut(){
-    this.afAuth.signOut().then(() => {
+    return this.afAuth.signOut().then(() => {
+      localStorage.removeItem('user');
       this.router.navigate(["auth/login"]);
     })
   }
-
 }

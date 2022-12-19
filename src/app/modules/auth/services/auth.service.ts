@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  constructor(private auth: Auth, private afAuth: AngularFireAuth) { }
+  constructor(private auth: Auth,  public router: Router, public ngZone: NgZone, private afAuth: AngularFireAuth) {}
 
   async resetPassword(email: string): Promise<void>{
-    
     try{
       return this.afAuth.sendPasswordResetEmail(email);
     }
@@ -18,8 +17,6 @@ export class AuthService {
       console.log(error);
     }
   }
-
-
 
   cargar( archivos: string[]){
     for(let archivo of archivos){
@@ -33,4 +30,5 @@ export class AuthService {
   logIn({email, password}: any){
     return signInWithEmailAndPassword(this.auth, email, password);
   }
+
 }
