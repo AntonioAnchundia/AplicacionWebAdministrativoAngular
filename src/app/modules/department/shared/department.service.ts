@@ -34,5 +34,5 @@ export class DepartmentService {
 
 
   //SUBIR UNA IMAGEN -> FIREBASE ME DEVUELVE UNA URL DONDE PUEDA ENCONTRAR LA IMAGEN
-  private uploadImage()
+  // private uploadImage()
 }

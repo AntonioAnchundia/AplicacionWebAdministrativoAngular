@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 
   logOut(){
     this.homeService.logOut();
-    // this._router.navigateByUrl("auth/login");
+    this._router.navigateByUrl("auth/login");
   }
 
   ngOnInit(): void {
@@ -36,6 +36,5 @@ export class HomeComponent implements OnInit {
     this.getScreenHeight = window.innerHeight;
     this.getScreenWidth <= 1169 ? this.mostarSideNav=true : this.mostarSideNav=false;
   }
- 
 
 }
