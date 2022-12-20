@@ -30,4 +30,9 @@ export class DepartmentService {
   delete(key: string): Promise<void>{
     return this.departmentRef.remove(key);      
   }
+
+
+
+  //SUBIR UNA IMAGEN -> FIREBASE ME DEVUELVE UNA URL DONDE PUEDA ENCONTRAR LA IMAGEN
+  private uploadImage()
 }
