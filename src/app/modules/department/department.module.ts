@@ -21,6 +21,7 @@ import { DepartmentService } from './shared/department.service';
 
 import {MatDialogModule} from '@angular/material/dialog';
 
+import { AngularFireStorageModule } from '@angular/fire/compat/storage'; //Librería para guardar imagenes
 
 @NgModule({
   declarations: [
