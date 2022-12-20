@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 
   logOut(){
     this.homeService.logOut();
-    // this._router.navigateByUrl("auth/login");
+    this._router.navigateByUrl("auth/login");
   }
 
   ngOnInit(): void {

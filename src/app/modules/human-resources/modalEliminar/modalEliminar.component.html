@@ -1,0 +1,8 @@
+<!-- <h1 mat-dialog-title>Delete file</h1> -->
+<div mat-dialog-content class="font-semibold text-center mb-2">
+  ¿Estas seguro que deseas eliminar?
+</div>
+<div mat-dialog-actions class="flex">
+  <button mat-button mat-dialog-close (click)="cancelar()" class="flex-auto w-3 px-3 py-1 m-2 bg-gray-400 rounded-xl text-white">CANCELAR</button>
+  <button mat-button mat-dialog-close cdkFocusInitial (click)="deleteTutorial()" class="flex-auto w-3 px-3 py-1 m-2 bg-red-500 rounded-xl text-white">ELIMINAR</button>
+</div>

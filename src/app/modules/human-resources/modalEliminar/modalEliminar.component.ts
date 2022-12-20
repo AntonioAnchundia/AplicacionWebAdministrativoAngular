@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Administrador } from '../../shared/administrador';
-import { AdministradorService } from '../../shared/administrador.service';
+import { HumanResources } from '../shared/human-resources';
+import { HumanResourcesService } from '../shared/human-resources.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { AdminComponent} from '../../pages/admin/admin.component'
+import { HumanResourcesComponent } from '../pages/human-resources/human-resources.component';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -13,33 +13,28 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./modalEliminar.component.css']
 })
 export class ModalEliminarComponent implements OnInit {
-  constructor(private actRoute: ActivatedRoute, private dialogRef: MatDialogRef<ModalEliminarComponent>, private adminAPI: AdministradorService) { }
-  // @Input() administrador?: Administrador; PADRE AL HIJO
-    // var id = actRoute.snapshot.paramMap.get('id');
-  // @Output() refreshList: EventEmitter<any> = new EventEmitter();
-  // message = '';
+  constructor(private actRoute: ActivatedRoute, private dialogRef: MatDialogRef<ModalEliminarComponent>, private humanAPI: HumanResourcesService) { }
 
 
-  @Input() administrador?: Administrador;
+
+  @Input() humanresources?: HumanResources;
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
-  currentTutorial!: Administrador ;
+  currentTutorial!: HumanResources ;
   currentIndex = -1;
 
-  admin?: Administrador;
-  @ViewChild(AdminComponent) child !: AdminComponent;
+human?: HumanResources;
+  @ViewChild(HumanResourcesComponent) child !: HumanResourcesComponent;
 
-  adminForm!: FormGroup;
-  //tutorials?: Administrador[];
+  humanForm!: FormGroup;
+  //tutorials?: HumanResources[];
 
   mostrar(){
-    // console.log(this.adminForm.get("key")?.setValue());
-    // console.log(this.child.sectActiveAdmin(admin))
     var id = this.actRoute.snapshot.paramMap.get('id');
     console.log(id);
   }
 
   deleteTutorial(): void {
-    // console.log(admins);
+    // console.log(humans);
     // if (this.currentTutorial.key) {
     //   this.adminAPI.delete(this.currentTutorial.key)
     //     .then(() => {
