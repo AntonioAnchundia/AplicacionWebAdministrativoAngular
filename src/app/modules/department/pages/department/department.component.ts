@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalEliminarComponent } from '../../components/ModalEliminar/ModalEliminar.component';
+import { async } from '@firebase/util';
 
 @Component({
   selector: 'app-department',
@@ -25,11 +26,13 @@ export class DepartmentComponent implements OnInit {
   departaments: Department[] = [];
   botones:boolean=false;
   displayedColumns: string[] = [ 'nombre', 'codigoDepa', 'actions']; //las columnas de la tabla
-
+  departamento !:Department;
+  newImage = '';
+  newFile = '';
 
   constructor(private departmentoAPI: DepartmentService, private dialog: MatDialog) { 
     this.departamentoForm = new FormGroup({
-      photo: new FormControl('',Validators.required),
+      photo : new FormControl('', Validators.required),
       nombre: new FormControl('', Validators.required),
       codigoDepa: new FormControl('', Validators.required),
       numeroPersonal: new FormControl('', Validators.required),
@@ -53,9 +56,10 @@ export class DepartmentComponent implements OnInit {
   }
 
   //Metodo Guardar
-  submitDepartemento(): void{
+  submitDepartemento(){
     if(this.departamentoForm.valid){
-      this.departmentoAPI.create(this.departamentoForm.value);
+      const path = 'Departamentos'; //Nombre de la ruta de como se va a guardar en el storage
+      this.departmentoAPI.create(this.newFile, path, this.departamentoForm.value);
       this.resetForm();
     }
   }
@@ -83,12 +87,14 @@ export class DepartmentComponent implements OnInit {
   //Metodo de mandar datos a los inputs
   sectActiveDepartment(departamento: Department){
     this.botones = true;
+    
     this.departamentoForm.get("nombre")?.setValue(departamento.nombre);
     this.departamentoForm.get("linkReunion")?.setValue(departamento.linkReunion);
     this.departamentoForm.get("codigoDepa")?.setValue(departamento.codigoDepa);
     this.departamentoForm.get("numeroPersonal")?.setValue(departamento.numeroPersonal);
   }
 
+  //Metodo de eliminar 
   deleteDepartment(enterAnimationDuration: string, exitAnimationDuration: string):void{
     this.dialog.open(ModalEliminarComponent, {
       disableClose: true,
@@ -107,14 +113,16 @@ export class DepartmentComponent implements OnInit {
     this.getScreenHeight = window.innerHeight;
     this.getScreenWidth <= 1169 ? this.mostarSideNav=true : this.mostarSideNav=false;
   }
-  
 
-private image: any;
-  handleImage(event: any): void{
-    //Extraigo la informacion de la img
-    this.image = event.target.files[0];
-    // console.log('IMAGE', this.image);
-}
-
-
+  //CARGAR IMAGEN EN EL IMPUT
+  async newUploadFile(event: any){
+    if(event.target.files && event.target.files[0]){
+      this.newFile = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = ((image) => {
+        this.newImage = image.target?.result as string;
+      });
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
 }

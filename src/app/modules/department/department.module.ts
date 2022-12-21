@@ -46,6 +46,10 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage'; //Libre
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     MatDialogModule,
+
+    AngularFireStorageModule,
+
+    // provideStorage(() => getStorage())
   ],
   providers:[DepartmentService],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],

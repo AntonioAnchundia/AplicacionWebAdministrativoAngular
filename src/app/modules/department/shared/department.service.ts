@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Department } from './department';
 import { AngularFireDatabase, AngularFireList} from '@angular/fire/compat/database';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { finalize } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +13,36 @@ export class DepartmentService {
 
   departmentRef : AngularFireList<Department>; //Referencia a la lista de datos del departamento
 
-  constructor(private db: AngularFireDatabase) { 
+  constructor(private db: AngularFireDatabase, public storage: AngularFireStorage) { 
     this.departmentRef = db.list(this.dbPath);
   }
 
-  create(departamento: Department): any{
-    return this.departmentRef.push(departamento);
+  create(file: any, path: string,departamento: Department){
+    //https://github.com/angular/angularfire/blob/master/docs/storage/storage.md -> documentacion del storage
+      return new Promise(resolve => {
+          //Este proceso es para almacenar la imagen en el storage -> y obtener la url del storage
+        const filePath = path + '/' + departamento.nombre;
+        const ref = this.storage.ref(filePath);
+        const task = ref.put(file); //se sube el archivo y se guarda en una tarea
+        task.snapshotChanges().pipe(
+          finalize( () => {
+            ref.getDownloadURL().subscribe( res => { //se obtiene la url del storage para ser almacenada en el realtimeDB
+              const downloadURL = res;
+              resolve(downloadURL);
+                //se crea el registro
+              this.departmentRef.push({ 
+                photo: downloadURL, 
+                nombre: departamento.nombre,
+                codigoDepa: departamento.codigoDepa,
+                numeroPersonal: departamento.numeroPersonal, 
+                linkReunion: departamento.linkReunion 
+                })
+  
+              return;
+            });
+          })
+        ).subscribe();
+      });
   }
 
   getAll(): AngularFireList<Department>{
@@ -30,9 +56,4 @@ export class DepartmentService {
   delete(key: string): Promise<void>{
     return this.departmentRef.remove(key);      
   }
-
-
-
-  //SUBIR UNA IMAGEN -> FIREBASE ME DEVUELVE UNA URL DONDE PUEDA ENCONTRAR LA IMAGEN
-  // private uploadImage()
 }
