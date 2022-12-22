@@ -30,6 +30,9 @@ export class DepartmentComponent implements OnInit {
   newImage = '';
   newFile = '';
 
+
+  // pictureControl: FormControl = new FormControl();
+
   constructor(private departmentoAPI: DepartmentService, private dialog: MatDialog) { 
     this.departamentoForm = new FormGroup({
       photo : new FormControl('', Validators.required),

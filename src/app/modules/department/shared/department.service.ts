@@ -37,7 +37,6 @@ export class DepartmentService {
                 numeroPersonal: departamento.numeroPersonal, 
                 linkReunion: departamento.linkReunion 
                 })
-  
               return;
             });
           })

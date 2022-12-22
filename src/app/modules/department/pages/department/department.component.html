@@ -104,13 +104,14 @@
             <!-- REGISTRO -->
             <form class="example-form" [formGroup]="departamentoForm">
                 <!-- APARATADO DE LA FOTO -->
-                <div class="container-foto w-full mt-3 md:w-1/5 md:h-auto flex items-center justify-center">
+                <!-- <div class="container-foto w-full mt-3 md:w-1/5 md:h-auto flex items-center justify-center"> -->
+                <div class="container-foto w-full  md:w-1/5 md:h-15 flex items-center justify-center">
                     <label class=" cursor-pointer mx-6 rounded border-2 border-slate-300 border-dashed h-24 flex justify-center items-center" (change)="newUploadFile($event)">
                         <input type="file" class="hidden" formControlName="photo" accept="image/*">                    
-                        <p class="text-sm text-slate-400 font-sans p-2 m-2" >
+                        <p class="text-sm text-slate-400 font-sans p-2 m-2" *ngIf="!departamentoForm.get('photo')?.value">
                             Agregue una foto 
                         </p>
-                        <img [src]="newImage" alt="">
+                        <img [src]="newImage" class="object-cover">
                     </label>
                 </div>
 

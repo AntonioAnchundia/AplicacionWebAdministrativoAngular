@@ -27,9 +27,11 @@ export class AdminComponent implements OnInit{
   adminForm : FormGroup; //Este es para el formulario
   admins: Administrador[] = []; //vinculado con el dataSource -> extracción de datos
   displayedColumns: string[] = [ 'name', 'correo', 'actions']; //las columnas de la tabla
-  currentAdmin!: Administrador;
+  // currentAdmin!: Administrador;
   currentIndex = -1;
   message = '';
+
+
 
   constructor(private adminAPI: AdministradorService, private dialog: MatDialog) {
     this.adminForm = new FormGroup({
@@ -41,6 +43,7 @@ export class AdminComponent implements OnInit{
       direccion: new FormControl('', Validators.required),
       contraseña: new FormControl('', Validators.required),
       repetirContraseña: new FormControl('', Validators.required),
+      key: new FormControl('')
     });
     // var id = this.actRoute.snapshot.paramMap.get('id');
 
@@ -100,11 +103,12 @@ export class AdminComponent implements OnInit{
     this.adminForm.get("direccion")?.setValue(admin.direccion);
     this.adminForm.get("contraseña")?.setValue(admin.contraseña);
     this.adminForm.get("repetirContraseña")?.setValue(admin.repetirContraseña);
+    this.adminForm.get("key")?.setValue(admin.key);
     return console.log(admin);
   }
 
   //Metodo de Eliminar Administrador
-  deleteAdmin(enterAnimationDuration: string, exitAnimationDuration: string):void{
+  deleteAdmin(enterAnimationDuration: string, exitAnimationDuration: string, key: string):void{
     this.dialog.open(ModalEliminarComponent, {
       disableClose: true,
       hasBackdrop: true,
@@ -113,55 +117,31 @@ export class AdminComponent implements OnInit{
       height: "auto",
       enterAnimationDuration,
       exitAnimationDuration,
+      data: key,
     })
   }
 
 
   //Metodo de actualizar administrador
   updateAdmin(){
-    console.log(this.adminForm.value)
-    // console.log(this.adminForm.get("nombre")?.setValue());
+    const data = {
+      nombre: this.adminForm.get("nombre")?.value,
+      apellido: this.adminForm.get("apellido")?.value,
+      // apellido: this.currentAdmin?.apellido,
+      // cedula: this.currentAdmin?.cedula,
+      // correo: this.currentAdmin?.correo,
+      // telefono: this.currentAdmin?.telefono,
+      // direccion: this.currentAdmin?.direccion,
+      // contraseña: this.currentAdmin?.contraseña,
+      // repetirContraseña: this.currentAdmin?.repetirContraseña,
+    };
+    const key = this.adminForm.get("key")?.value;
 
-    // let zxc = this.admins;
-    // var id = this.sectActiveAdmin(this.administrador.get);
-    // this.adminAPI.UpdateAdmin(id, this.adminForm.value);
-    // console.log("id: "+ id);
-
-    //key - apellido - cedula ...
-
-    //Obtengo todas las Key de las BD
-    // for(let i = 0; i < this.admins.length; i++){
-    //   console.log(this.admins[i].nombre);
-    //   // console.log(this.sectActiveAdmin(this.admins[i])); NO FUNCIONA
-    // }
-
-
-
-    //OBTENER LA KEY SELECCIONADA
-      //
-
-    // let[key,] = this.admins;
-    // console.log(key);
-  // console.log(this.adminForm.get("key")?.setValue(this.currentAdmin.key));
-
-
-    // const data = {
-    //   nombre: this.currentAdmin?.nombre,
-    //   apellido: this.currentAdmin?.apellido,
-    //   cedula: this.currentAdmin?.cedula,
-    //   correo: this.currentAdmin?.correo,
-    //   telefono: this.currentAdmin?.telefono,
-    //   direccion: this.currentAdmin?.direccion,
-    //   contraseña: this.currentAdmin?.contraseña,
-    //   repetirContraseña: this.currentAdmin?.repetirContraseña,
-    // };
-
-    // if(this.currentAdmin?.key) {
-    //   this.adminAPI.update(this.currentAdmin.key, data)
-    //     .then(() => this.message = 'Actualización exitosa')
-    //     .catch(err => console.log(err));
-    // }
-
+    if(key){
+      this.adminAPI.update(key, data)
+      .then(() => this.message = 'Actualización exitosa')
+      .catch(err => console.log(err));
+    }
   }
 
   //Metodo de cambio de tamaño
