@@ -28,9 +28,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.cargar(['animacionLogin']);
-
-
-    // this.authService.UserLogueado();
   }
 
   onReset(){
@@ -60,12 +57,4 @@ export class LoginComponent implements OnInit {
         },5000)
     });
   }
-
-
-  // onClickLogin(){
-  //   this.authService.logIn(this.formLogin.value);
-  //   this._router.navigateByUrl("admin/home");
-  //   // this.authService.setToken()
-  // }
-
 }

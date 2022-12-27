@@ -8,19 +8,16 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AdministradorService } from './shared/administrador.service';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../../../environments/environment';
-
-
 import {MatCardModule} from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table'  
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import { provideAuth, getAuth } from '@angular/fire/auth';
 @NgModule({
   declarations: [
     AdminComponent,
@@ -41,8 +38,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatTableModule,
     MatTooltipModule,
     MatPaginatorModule,
-
     MatDialogModule,
+    provideAuth(() => getAuth())
   ],
   providers:[AdministradorService],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],

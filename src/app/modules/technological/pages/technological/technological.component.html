@@ -6,7 +6,7 @@
         </div>
 
         <div class="dropdown dropend flex justify-center mt-4 mb-9">
-            <a href="#" class="d-block link-dark text-decoration-none  animate__animated animate__backInRight"
+            <a href="#" class="d-block link-dark text-decoration-none  animate_animated animate_backInRight"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="https://github.com/mdo.png" alt="mdo" width="120" height="120" class="rounded-circle">
             </a>
@@ -153,12 +153,12 @@
                             </div>
                             <mat-form-field appearance="fill" class="mr-3 w-full sm:w-auto">
                                 <mat-label>Nombre</mat-label>
-                                <input matInput  formControlName="firstCtrl"
+                                <input oninput="this.value = this.value.replace(/[^A-Za-zñÑáéíóúÁÉÍÓÚ\s. ]/g, '').replace(/(\..*)\./g, '$1');" matInput  formControlName="firstCtrl"
                                     required>
                             </mat-form-field>
                             <mat-form-field appearance="fill" class="mr-3 w-full sm:w-auto">
                                 <mat-label>Nombre corto</mat-label>
-                                <input matInput  formControlName="firstCtrl"
+                                <input oninput="this.value = this.value.replace(/[^A-Za-zñÑáéíóúÁÉÍÓÚ\s. ]/g, '').replace(/(\..*)\./g, '$1');" matInput  formControlName="firstCtrl"
                                     required>
                             </mat-form-field>
                             <mat-form-field appearance="fill" class="mr-3 w-full sm:w-auto">
@@ -168,7 +168,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="fill" class="mr-3 w-full sm:w-auto">
                                 <mat-label>Telefono</mat-label>
-                                <input matInput  formControlName="firstCtrl"
+                                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="10" matInput  formControlName="firstCtrl"
                                     required>
                             </mat-form-field>
                             <mat-form-field appearance="fill" class="mr-3 w-full sm:w-auto">
@@ -183,7 +183,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="fill" class="mr-3 w-full sm:w-auto">
                                 <mat-label>Director</mat-label>
-                                <input matInput  formControlName="firstCtrl"
+                                <input oninput="this.value = this.value.replace(/[^A-Za-zñÑáéíóúÁÉÍÓÚ\s. ]/g, '').replace(/(\..*)\./g, '$1');" matInput  formControlName="firstCtrl"
                                     required>
                             </mat-form-field>
 
@@ -213,7 +213,7 @@
                     <form [formGroup]="thirdFormGroup">
                         <mat-form-field appearance="fill">
                             <mat-label>Phone number</mat-label>
-                            <input matInput formControlName="thirdCtrl" placeholder="Ex. 12345678" required>
+                            <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="10" matInput formControlName="thirdCtrl" placeholder="Ex. 12345678" required>
                         </mat-form-field>
                         <div>
                             <button mat-button matStepperPrevious class="bg-black p-2 rounded text-white w-3/4 sm:w-auto text-center mr-2">Anterior</button>
@@ -241,7 +241,7 @@
                 </div>
 
                 <div class="dropdown dropend flex justify-center mt-4 mb-9">
-                    <a href="#" class="d-block link-dark text-decoration-none  animate__animated animate__backInRight"
+                    <a href="#" class="d-block link-dark text-decoration-none  animate_animated animate_backInRight"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://github.com/mdo.png" alt="mdo" width="120" height="120" class="rounded-circle">
                     </a>

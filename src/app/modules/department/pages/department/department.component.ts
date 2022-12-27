@@ -3,11 +3,10 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDrawerMode } from '@angular/material/sidenav';
 import { Department } from '../../shared/department';
 import { DepartmentService } from '../../shared/department.service';
-import { MatTableDataSource } from '@angular/material/table';
 import { map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalEliminarComponent } from '../../components/ModalEliminar/ModalEliminar.component';
-import { async } from '@firebase/util';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-department',
@@ -16,6 +15,7 @@ import { async } from '@firebase/util';
 })
 
 export class DepartmentComponent implements OnInit {
+
   departamentoForm : FormGroup;
   public getScreenWidth: any;
   public getScreenHeight: any;
@@ -29,12 +29,13 @@ export class DepartmentComponent implements OnInit {
   departamento !:Department;
   newImage = '';
   newFile = '';
+  message = '';
 
-
-  // pictureControl: FormControl = new FormControl();
+  @ViewChild('myfile') input?: DepartmentComponent;
 
   constructor(private departmentoAPI: DepartmentService, private dialog: MatDialog) { 
     this.departamentoForm = new FormGroup({
+      key: new FormControl(''),
       photo : new FormControl('', Validators.required),
       nombre: new FormControl('', Validators.required),
       codigoDepa: new FormControl('', Validators.required),
@@ -52,17 +53,19 @@ export class DepartmentComponent implements OnInit {
 
   //Resetea el Formulario
   resetForm(){
+    this.botones=false;
     this.departamentoForm.reset();
     Object.keys(this.departamentoForm.controls).forEach((key) =>{
       this.departamentoForm.controls[key].setErrors(null);
     })
   }
 
+
   //Metodo Guardar
   submitDepartemento(){
+    const path = 'Departamento';
     if(this.departamentoForm.valid){
-      const path = 'Departamentos'; //Nombre de la ruta de como se va a guardar en el storage
-      this.departmentoAPI.create(this.newFile, path, this.departamentoForm.value);
+      this.departmentoAPI.create(this.newFile, path, this.departamentoForm.value)
       this.resetForm();
     }
   }
@@ -90,15 +93,16 @@ export class DepartmentComponent implements OnInit {
   //Metodo de mandar datos a los inputs
   sectActiveDepartment(departamento: Department){
     this.botones = true;
-    
+    this.departamentoForm.get("key")?.setValue(departamento.key);
     this.departamentoForm.get("nombre")?.setValue(departamento.nombre);
     this.departamentoForm.get("linkReunion")?.setValue(departamento.linkReunion);
     this.departamentoForm.get("codigoDepa")?.setValue(departamento.codigoDepa);
     this.departamentoForm.get("numeroPersonal")?.setValue(departamento.numeroPersonal);
+    this.departamentoForm.get("key")?.setValue(departamento.key);
   }
 
   //Metodo de eliminar 
-  deleteDepartment(enterAnimationDuration: string, exitAnimationDuration: string):void{
+  deleteDepartment(enterAnimationDuration: string, exitAnimationDuration: string, key: string):void{
     this.dialog.open(ModalEliminarComponent, {
       disableClose: true,
       hasBackdrop: true,
@@ -107,9 +111,27 @@ export class DepartmentComponent implements OnInit {
       height: "auto",
       enterAnimationDuration,
       exitAnimationDuration,
+      data: key,
     })
   }
 
+  //ActualizarDepartamento
+  updateDepart(){
+    const data = {
+      nombre: this.departamentoForm.get("nombre")?.value,
+      apellido: this.departamentoForm.get("codigoDepa")?.value,
+      numeroPersonal: this.departamentoForm.get("numeroPersonal")?.value,
+      linkReunion:this.departamentoForm.get("linkReunion")?.value,
+      photo: this.departamentoForm.get("photo ")?.value
+    };
+    const key = this.departamentoForm.get("key")?.value;
+    
+    if(key){
+      this.departmentoAPI.update(key, data)
+      .then(() => this.message = 'Actualización exitosa')
+      .catch(err => console.log(err));
+    }
+  }
   @HostListener('window:resize', ['$event'])
   onWindowResize() {
     this.getScreenWidth = window.innerWidth;
@@ -128,4 +150,4 @@ export class DepartmentComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
   }
-}
+}   

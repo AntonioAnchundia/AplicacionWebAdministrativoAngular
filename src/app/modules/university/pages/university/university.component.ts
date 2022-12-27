@@ -35,7 +35,7 @@ export class UniversityComponent implements OnInit {
   }
 
   // autocomplete
-  // ********************************************************************************
+  // ****************************
   myControl = new FormControl('');
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions?: Observable<string[]>;
@@ -60,7 +60,7 @@ export class UniversityComponent implements OnInit {
     this.universdidadForm = new FormGroup({
       nombre_Universidad: new FormControl('', Validators.required),
       nombreCorto_Universidad:new FormControl('', Validators.required),
-      correo_Universidad: new FormControl('', Validators.required),
+      correo_Universidad: new FormControl('', [Validators.required, Validators.email]),
       telefono_Universidad: new FormControl('', Validators.required),
       direccion_Universidad:new FormControl('', Validators.required),
       url_Universidad: new FormControl('', Validators.required),
@@ -69,20 +69,20 @@ export class UniversityComponent implements OnInit {
     
     this.facultadForm = new FormGroup({
       nombreFacultad: new FormControl('', Validators.required),
-      correoFacultad:new FormControl('', Validators.required),
+      correoFacultad:new FormControl('', [Validators.required, Validators.email]),
       telefonoFacultad: new FormControl('', Validators.required),
       nombreDecanoFacultad: new FormControl('', Validators.required),
-      correoDecanoFacultad:new FormControl('', Validators.required),
+      correoDecanoFacultad:new FormControl('', [Validators.required, Validators.email]),
       telefonoDecanoFacultad: new FormControl('', Validators.required),
       direccionFacultad: new FormControl('', Validators.required),
     })
 
     this.carreraForm = new FormGroup({
       nombreCarrera: new FormControl('', Validators.required),
-      CorreoCarrera: new FormControl('', Validators.required),
+      CorreoCarrera: new FormControl('', [Validators.required, Validators.email]),
       telefonoCarrera: new FormControl('', Validators.required),
       nombreDirectorCarrera: new FormControl('', Validators.required),
-      correoDirectorCarrera: new FormControl('', Validators.required),
+      correoDirectorCarrera: new FormControl('', [Validators.required, Validators.email]),
       telefonoDirectorCarrera: new FormControl('', Validators.required),
     })
 
@@ -106,6 +106,4 @@ export class UniversityComponent implements OnInit {
       this.resetForm();
     }
   }
-
-  
 }

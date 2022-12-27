@@ -27,32 +27,35 @@ export class AdminComponent implements OnInit{
   adminForm : FormGroup; //Este es para el formulario
   admins: Administrador[] = []; //vinculado con el dataSource -> extracción de datos
   displayedColumns: string[] = [ 'name', 'correo', 'actions']; //las columnas de la tabla
-  // currentAdmin!: Administrador;
+  newImage = '';
+  newFile = '';
   currentIndex = -1;
   message = '';
 
-
-
   constructor(private adminAPI: AdministradorService, private dialog: MatDialog) {
     this.adminForm = new FormGroup({
+      photo: new FormControl('', Validators.required),
       nombre: new FormControl('', Validators.required),
       apellido: new FormControl('', Validators.required),
       cedula: new FormControl('', Validators.required),
-      correo: new FormControl('', Validators.required),
+      correo: new FormControl('', [Validators.required, Validators.email]),
       telefono: new FormControl('', Validators.required),
       direccion: new FormControl('', Validators.required),
       contraseña: new FormControl('', Validators.required),
       repetirContraseña: new FormControl('', Validators.required),
       key: new FormControl('')
     });
-    // var id = this.actRoute.snapshot.paramMap.get('id');
-
   }
 
   ngOnInit(): void {
     this.getScreenWidth = window.innerWidth;
     this.getScreenHeight = window.innerHeight;
     this.retrieveAdmins();
+  }
+
+  //Refrescar Página
+  locationreload() {
+    location.reload();      
   }
 
   // Reset form
@@ -66,8 +69,9 @@ export class AdminComponent implements OnInit{
 
   // submit admin
   submitAdmin(){
+    const path = 'Administrador';
     if(this.adminForm.valid){
-      this.adminAPI.addAdmin(this.adminForm.value);
+      this.adminAPI.create(this.newFile, path, this.adminForm.value);
       this.resetForm();
     }
   }
@@ -99,12 +103,14 @@ export class AdminComponent implements OnInit{
     this.adminForm.get("apellido")?.setValue(admin.apellido)
     this.adminForm.get("cedula")?.setValue(admin.cedula);
     this.adminForm.get("correo")?.setValue(admin.correo);
+    this.adminForm.get("correo")?.disable();
     this.adminForm.get("telefono")?.setValue(admin.telefono);
     this.adminForm.get("direccion")?.setValue(admin.direccion);
     this.adminForm.get("contraseña")?.setValue(admin.contraseña);
-    this.adminForm.get("repetirContraseña")?.setValue(admin.repetirContraseña);
+    this.adminForm.get("contraseña")?.disable();
+    this.adminForm.get("repetirContraseña")?.setValue(admin.contraseña);
+    this.adminForm.get("repetirContraseña")?.disable();
     this.adminForm.get("key")?.setValue(admin.key);
-    return console.log(admin);
   }
 
   //Metodo de Eliminar Administrador
@@ -127,13 +133,12 @@ export class AdminComponent implements OnInit{
     const data = {
       nombre: this.adminForm.get("nombre")?.value,
       apellido: this.adminForm.get("apellido")?.value,
-      // apellido: this.currentAdmin?.apellido,
-      // cedula: this.currentAdmin?.cedula,
-      // correo: this.currentAdmin?.correo,
-      // telefono: this.currentAdmin?.telefono,
-      // direccion: this.currentAdmin?.direccion,
-      // contraseña: this.currentAdmin?.contraseña,
-      // repetirContraseña: this.currentAdmin?.repetirContraseña,
+      cedula: this.adminForm.get("cedula")?.value,
+      correo: this.adminForm.get("correo")?.value,
+      telefono: this.adminForm.get("telefono")?.value,
+      direccion: this.adminForm.get("direccion")?.value,
+      contraseña: this.adminForm.get("contraseña")?.value,
+      repetirContraseña: this.adminForm.get("repetirContraseña")?.value
     };
     const key = this.adminForm.get("key")?.value;
 
@@ -141,7 +146,9 @@ export class AdminComponent implements OnInit{
       this.adminAPI.update(key, data)
       .then(() => this.message = 'Actualización exitosa')
       .catch(err => console.log(err));
+      this.resetForm();
     }
+  
   }
 
   //Metodo de cambio de tamaño
@@ -151,5 +158,15 @@ export class AdminComponent implements OnInit{
     this.getScreenHeight = window.innerHeight;
     this.getScreenWidth <= 1169 ? this.mostarSideNav=true : this.mostarSideNav=false;
   }
-
+  //CARGAR IMAGEN EN EL IMPUT
+  async newUploadFile(event: any){
+    if(event.target.files && event.target.files[0]){
+      this.newFile = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = ((image) => {
+        this.newImage = image.target?.result as string;
+      });
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
 }

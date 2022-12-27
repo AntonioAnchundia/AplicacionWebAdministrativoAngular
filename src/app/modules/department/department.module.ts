@@ -49,7 +49,6 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage'; //Libre
 
     AngularFireStorageModule,
 
-    // provideStorage(() => getStorage())
   ],
   providers:[DepartmentService],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
