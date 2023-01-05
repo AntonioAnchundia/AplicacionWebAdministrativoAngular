@@ -49,6 +49,7 @@ export class AdministradorService {
                     direccion: admin.direccion,
                     contraseña: admin.contraseña,
                     repetirContraseña: admin.repetirContraseña,
+                    rol: admin.Rol
                   });
                 }).catch((error) => {
                   console.log(error)

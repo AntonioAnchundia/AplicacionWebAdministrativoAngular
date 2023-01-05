@@ -102,12 +102,22 @@
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Universidad</mat-label>
                         <input type="text" placeholder="Ingrese una universidad" aria-label="Number" matInput
-                            [formControl]="myControl" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                {{option}}
-                            </mat-option>
-                        </mat-autocomplete>
+                            [formGroup]="universdidadForm" [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete" [(ngModel)]="selectedUniversidad.key">
+                                <mat-option *ngFor="let universidad of universidads" value={{universidad.key}}>
+                                    {{universidad.nombre_Universidad}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        <!-- <mat-autocomplete #auto="matAutocomplete"> -->
+                            <!-- <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                {{universidads | json}}
+                            </mat-option> -->
+                            <!-- <select [(ngModel)]="selectedUniversidad.key">
+                                <option *ngFor="let universidad of universidads" value={{universidad.key}}>
+                                    {{universidad.nombre_Universidad}}
+                                </option>
+                            </select> -->
+                        <!-- </mat-autocomplete> -->
                     </mat-form-field>
                 </div>
                 <div class="">

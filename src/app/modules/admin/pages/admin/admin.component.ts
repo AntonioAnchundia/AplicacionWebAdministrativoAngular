@@ -43,7 +43,8 @@ export class AdminComponent implements OnInit{
       direccion: new FormControl('', Validators.required),
       contraseña: new FormControl('', Validators.required),
       repetirContraseña: new FormControl('', Validators.required),
-      key: new FormControl('')
+      key: new FormControl(''),
+      Rol: new FormControl('admin')
     });
   }
 

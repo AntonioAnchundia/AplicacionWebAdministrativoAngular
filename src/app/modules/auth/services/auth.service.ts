@@ -1,7 +1,8 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, onAuthStateChanged } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { Administrador } from '../../admin/shared/administrador';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,4 @@ export class AuthService {
   logIn({email, password}: any){
     return signInWithEmailAndPassword(this.auth, email, password);
   }
-
 }

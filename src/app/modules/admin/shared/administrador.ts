@@ -9,4 +9,5 @@ export interface Administrador {
     direccion?: string;
     contraseña?: string;
     repetirContraseña?: string;
+    Rol ?: string;
 }
